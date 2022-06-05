@@ -1,0 +1,21 @@
+
+syntax = "proto3";
+
+package impostorcmd.config.v1;
+
+message VersionEntity {
+  string version = 1;
+}
+
+message Config {
+  string version = 1; // for this object must equal to "v1" when used as root object
+  repeated Target targets = 2; // list of targets
+}
+
+message Target {
+  string version = 1; // for this object must equal to "v1" when used as root object
+  string cmd = 2; // command to impostor
+  string impostor = 3; // impostor command
+  repeated string impostor_args = 4; // additional impostor command arguments
+  bool include_arg_0 = 5; // whether to append (before arg 1) arg 0 from the original command (note it will result in an additional argument: <impostor arg 0> <impostor arg 1> ... <impostor arg n> <original arg 0> <arg 1> ... <arg n>)
+}

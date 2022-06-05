@@ -1,0 +1,16 @@
+
+syntax = "proto3";
+
+package impostorcmd.internal.impostordata.v1;
+
+message ObjectVersion {
+  string version = 1;
+}
+
+message TargetDescriptor {
+  string version = 1; // for this object must equal to "v1"
+  string original_cmd = 2;
+  string impostor_cmd = 3;
+  repeated string impostor_cmd_args = 4;
+  bool include_arg_0 = 5;
+}

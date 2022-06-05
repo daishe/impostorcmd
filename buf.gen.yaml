@@ -1,0 +1,10 @@
+version: v1
+managed:
+  enabled: true
+  optimize_for: SPEED
+  go_package_prefix:
+    default: github.com/daishe/impostorcmd
+plugins:
+- name: go
+  out: .
+  opt: paths=source_relative
