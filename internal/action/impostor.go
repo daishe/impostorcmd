@@ -43,7 +43,12 @@ func Impostor(ctx context.Context, target *impostordatav1.TargetDescriptor, args
 		cmdArgs = append(cmdArgs, args[1:]...)
 	}
 
-	cmd := exec.CommandContext(ctx, target.ImpostorCmd, cmdArgs...)
+	impostorCmdPath, err := descriptor.Lookup(target.ImpostorCmd)
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.CommandContext(ctx, impostorCmdPath, cmdArgs...)
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr
 	cmd.Env = append([]string(nil), os.Environ()...)
 	cmd.Env = append(cmd.Env, "IMPOSTORCMD_ORIGINAL_COMMAND="+target.OriginalCmd)
@@ -52,7 +57,7 @@ func Impostor(ctx context.Context, target *impostordatav1.TargetDescriptor, args
 	}
 
 	sigpassStop := sigpass(ctx, cmd)
-	err := cmd.Wait()
+	err = cmd.Wait()
 	sigpassStop()
 	return err
 }

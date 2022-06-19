@@ -9,7 +9,6 @@ import (
 	"os"
 	"runtime"
 	"strings"
-	"syscall"
 
 	"google.golang.org/protobuf/proto"
 
@@ -168,18 +167,7 @@ func cp(dst, src string, modOwnerRef string, copy func(*os.File, *os.File) error
 		return undo, err
 	}
 
-	if runtime.GOOS == "windows" {
-		return undo, nil
-	}
-	refSys := refStat.Sys()
-	if refSys == nil {
-		return undo, nil
-	}
-	refStatSys, ok := refSys.(*syscall.Stat_t)
-	if !ok {
-		return undo, nil
-	}
-	if err = dstFile.Chown(int(refStatSys.Uid), int(refStatSys.Gid)); err != nil {
+	if _, err = tryFChown(dstFile, refStat); err != nil {
 		return undo, err
 	}
 	return undo, nil

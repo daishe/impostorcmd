@@ -52,6 +52,9 @@ func Lookup(path string) (absPath string, err error) {
 		return filepath.Abs(path)
 	}
 
+	if runtime.GOOS == "windows" {
+		path = strings.ReplaceAll(path, "/", string(os.PathSeparator))
+	}
 	if !strings.ContainsRune(path, os.PathSeparator) { // not a path
 		if path, err = exec.LookPath(path); err != nil {
 			return "", err
