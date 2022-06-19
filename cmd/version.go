@@ -41,6 +41,6 @@ func versionCmd(r *rootOptions) *cobra.Command {
 }
 
 func versionCmdRun(cmd *cobra.Command, r *rootOptions, o *versionOptions, args []string) error {
-	fmt.Println("application: ", appVersion, ", commit: ", commitHash, ", configuration: ", configVersion)
+	fmt.Fprintln(cmd.OutOrStdout(), "application: ", appVersion, ", commit: ", commitHash, ", configuration: ", configVersion)
 	return nil
 }
