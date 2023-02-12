@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  go_version: "^1.18"
+  go_version: "^1.20"
 
 jobs:
   test:

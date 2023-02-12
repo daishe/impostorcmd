@@ -1,6 +1,6 @@
 module github.com/daishe/impostorcmd
 
-go 1.17
+go 1.20
 
 require (
 	github.com/bufbuild/buf v1.14.0
