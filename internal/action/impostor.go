@@ -74,7 +74,8 @@ func sigpass(ctx context.Context, cmd *exec.Cmd) func() {
 		for {
 			select {
 			case sig := <-ch:
-				cmd.Process.Signal(sig) // ignore errors
+				// ignore errors
+				cmd.Process.Signal(sig) //nolint:errcheck
 			case <-ctx.Done():
 				signal.Stop(ch)
 				wg.Done()

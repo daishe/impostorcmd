@@ -96,7 +96,7 @@ jobs:
       run: |
         mkdir -p dist
         GOOS=${{ matrix.GOOS }} GOARCH=${{ matrix.GOARCH }} go build \
-          -ldflags="-X 'main.Version=$GIT_TAG' -X 'main.Commit=$GIT_COMMIT'"
+          -ldflags="-X 'main.Version=$GIT_TAG' -X 'main.Commit=$GIT_COMMIT'" \
           -o dist/impostorcmd-${{ matrix.GOOS }}-${{ matrix.GOARCH }} \
           -v \
           .
